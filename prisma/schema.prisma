@@ -1,0 +1,109 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+  previewFeatures = ["interactiveTransactions"]
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+
+model ownerProduct {
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  userId     String
+  product    Product  @relation(fields: [productId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  productId  String
+  assignedAt DateTime @default(now())
+
+
+  @@id([userId, productId])
+}
+
+enum Role {
+  ADMIN
+  PAYMENT
+  LOGISTIQUE
+}
+
+model User {
+  id               String          @id @default(uuid())
+  email            String          @unique
+  password         String?
+  products         ownerProduct[]
+  carts            Cart[]
+  payments         Payment[]
+  stripeCustomerID String?
+  role             Role?
+}
+
+model ProductPictures {
+  id                Int         @id @default(autoincrement())
+  src               String
+  created_at        DateTime?   @default(now())
+  update_at         DateTime?
+  productPictures   Product     @relation(fields: [productId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  productId         String
+
+}
+
+
+
+model ProductsOnCart {
+  id             Int       @id @default(autoincrement())
+  cart           Cart?     @relation(fields: [cartId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  cartId         String?
+  product        Product?  @relation(fields: [productId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  productId      String?
+  assignedAt     DateTime? @default(now())
+  quantityInCart Int       @default(1)
+
+}
+
+model Product {
+  id                 String            @id @default(uuid())
+
+  ref                String
+  title              String            @db.Char(50)
+  description        String            @db.Char(300)
+  pictures           ProductPictures[]
+  price              Int               @default(0)
+  created_at         DateTime          @default(now())
+  update_at          DateTime?         @default(now())
+  owner              ownerProduct[]
+  carts              ProductsOnCart[]
+}
+
+model Cart {
+  id             String           @id @default(uuid())
+  created_at     DateTime         @default(now())
+  update_at      DateTime?
+  status         StatusCart
+  delivery_fees  Int              @default(0)
+  total          Int              @default(0)
+  owner          User?            @relation(fields: [ownerId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  ownerId        String?
+  products       ProductsOnCart[]
+  payment        Payment?
+  error_Messages Json[]
+}
+
+enum StatusCart {
+  PENDING
+  ABANDONED
+  PAID
+}
+
+model Payment {
+  id                String    @id @default(uuid())
+  created_at        DateTime  @default(now())
+  update_at         DateTime?
+  owner             User      @relation(fields: [ownerId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  ownerId           String    @unique
+  affiliateCart     Cart      @relation(fields: [cartId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  cartId            String    @unique
+
+}
