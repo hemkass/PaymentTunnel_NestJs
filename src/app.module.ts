@@ -6,9 +6,19 @@ import { ProductsModule } from './products/products.module';
 import { CartsModule } from './carts/carts.module';
 import { PaymentsModule } from './payments/payments.module';
 import { PrismaService } from './prisma/prisma.service';
+import { ConfigModule } from '@nestjs/config';
 
 @Module({
-  imports: [PrismaModule, ProductsModule, CartsModule, PaymentsModule],
+  imports: [
+    PrismaModule,
+    ProductsModule,
+    CartsModule,
+    PaymentsModule,
+    ConfigModule.forRoot({
+      isGlobal: true,
+      envFilePath: `.env.${process.env.NODE_ENV}`,
+    }),
+  ],
   controllers: [AppController],
   providers: [AppService, PrismaService],
 })

@@ -75,6 +75,7 @@ model Product {
   update_at          DateTime?         @default(now())
   owner              ownerProduct[]
   carts              ProductsOnCart[]
+
 }
 
 model Cart {
