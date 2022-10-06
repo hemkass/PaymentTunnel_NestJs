@@ -5,5 +5,5 @@ export const ExistingProduct = createParamDecorator(
     const request = context.switchToHttp().getRequest();
 
     return request.existingProduct;
-  }
+  },
 );

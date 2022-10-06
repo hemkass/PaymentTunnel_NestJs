@@ -28,6 +28,7 @@
     "@nestjs/platform-express": "^9.0.0",
     "@nestjs/swagger": "^6.1.2",
     "@prisma/client": "^4.4.0",
+    "class-validator": "^0.13.2",
     "express-session": "^1.17.3",
     "reflect-metadata": "^0.1.13",
     "rimraf": "^3.0.2",

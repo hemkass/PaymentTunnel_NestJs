@@ -18,7 +18,6 @@ export class ExistingCartMiddleware implements NestMiddleware {
   constructor(private prisma: PrismaService) {}
 
   async use(req: Request, res: Response, next: NextFunction) {
-    // console.log('datas', req.params.productId);
     try {
       let cartId;
       if (req.params.cartId) {
@@ -26,6 +25,9 @@ export class ExistingCartMiddleware implements NestMiddleware {
       }
       if (req.body.cartId) {
         cartId = req.body.cartId;
+      }
+      if (req.query.cartId) {
+        cartId = req.query.cartId;
       }
       // let productId = req.params[0].split('/').pop();
 
@@ -52,6 +54,7 @@ export class ExistingCartMiddleware implements NestMiddleware {
           throw new NotFoundException('no cart found');
         }
       }
+
       next();
     } catch (error) {
       res.json(error);

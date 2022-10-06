@@ -5,5 +5,5 @@ export const ExistingCart = createParamDecorator(
     const request = context.switchToHttp().getRequest();
 
     return request.existingCart;
-  }
+  },
 );
