@@ -11,6 +11,7 @@ import {
   Res,
   Req,
 } from '@nestjs/common';
+import { Response } from 'express';
 import { ApiBody, ApiQuery, ApiTags } from '@nestjs/swagger';
 import { CartsService } from 'src/carts/carts.service';
 import { ExistingCart } from 'src/carts/decorators/existing-cart';
@@ -19,6 +20,10 @@ import { ExistingProduct } from './decorator/current-product.decorator';
 import { addProductDTO } from './dtos/addProduct.dto';
 import { addProductBodyDTO } from './dtos/addProduct_body.dto';
 import { ProductsService } from './products.service';
+import { ExistingProductOnCart } from './decorator/current-productOnCart.decorator';
+import { Cart, Product } from '@prisma/client';
+import { removeProductDTO } from './dtos/removeProduct.dto';
+import { NotFoundError } from '@prisma/client/runtime';
 
 @ApiTags('products')
 @Controller('products')
@@ -57,7 +62,7 @@ export class ProductsController {
     required: false,
   })
   @Post('add/cart/:productId')
-  async newCart(
+  async AddProductToCart(
     @Param('productId') productId: string,
 
     @ExistingProduct() product,
@@ -84,39 +89,58 @@ export class ProductsController {
     }
   }
 
-  /*   @ApiBody({
-    type: addProductDTO,
+  @ApiBody({
+    type: removeProductDTO,
+    description: 'Remove product on cart, by default quantity to remove is one',
+    required: false,
     examples: {
-      products: {
+      quantityToAdd: {
         value: {
-          quantity: 20,
-          cartId: '15e4d1c0-2856-4da7-b9e9-cd4df194548c',
+          quantity: 3,
         },
       },
     },
   })
-  @Patch('/addToCart/:productId')
-  addToCart(
+  @Patch('remove/:productId/:cartId')
+  async removeFromCart(
     @Param('productId') productId: string,
-    @ExistingProduct() product,
-    // @Param('cartId') cartId: string,
-    @Body() body,
-  ) {
-    let quantity = Number(body.quantity);
+    @Param('cartId') cartId: string,
+    @ExistingProductOnCart() productOncart,
+    @ExistingProduct() product: Product,
+    @ExistingCart() cart: Cart,
+    @Res() response: Response,
+    @Body('quantity') quantity?: number,
+  ): Promise<any> {
+    if (productOncart) {
+      let removeProductData: removeProductDTO = {
+        product: product,
+        cart: cart,
+        productOncart,
+      };
 
-    let addProductData: addProductDTO = {
-      productId: productId,
-
-      quantityWanted: quantity,
-      product: product,
-    };
-    if (body.cartId) {
-      addProductData.cartId = body.cartId;
+      if (quantity) {
+        removeProductData.quantityRemoved = quantity;
+      }
+      let deletedFromCart = await this.productService.removeFromCart(
+        removeProductData,
+      );
+      console.log('deleteproduct on Controller', deletedFromCart);
+      if (deletedFromCart) {
+        console.log('hello reps,', deletedFromCart);
+        response.status(200).send({
+          message: deletedFromCart,
+        });
+      } else {
+        response.status(404).send({
+          message: `product ${productId} not found on the cart ${cartId} `,
+        });
+      }
+    } else {
+      throw new NotFoundError('No product on Cart');
     }
-    return this.productService.addProductToCart(addProductData);
-  } */
+  }
 
-  /*  @Delete('/:productId')
+  @Delete('/:productId')
   async deleteProduct(
     @Param('productId') id: string,
     @ExistingProduct() product,
@@ -128,5 +152,5 @@ export class ProductsController {
         message: `Your product ${productDeleted.id} been succesfully suppressed`,
       });
     }
-  } */
+  }
 }

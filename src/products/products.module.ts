@@ -6,6 +6,7 @@ import { ExistingProductMiddleware } from './middleware/existing-product.middlew
 import { CartsService } from 'src/carts/carts.service';
 import { ExistingCart } from 'src/carts/decorators/existing-cart';
 import { ExistingCartMiddleware } from 'src/carts/middleware/existing_cart.middleware';
+import { CheckingProductOnCartMiddleware } from './middleware/checking-productOnCart.middleware';
 
 @Module({
   providers: [ProductsService, PrismaService, CartsService],
@@ -21,5 +22,11 @@ export class ProductsModule {
       path: 'products/add/cart/:productId',
       method: RequestMethod.GET,
     });
+    consumer
+      .apply(CheckingProductOnCartMiddleware)
+      .forRoutes(ProductsController, {
+        path: 'remove/:productId/:cartId',
+        method: RequestMethod.PATCH,
+      });
   }
 }
