@@ -14,19 +14,23 @@ import { CheckingProductOnCartMiddleware } from './middleware/checking-productOn
 })
 export class ProductsModule {
   configure(consumer: MiddlewareConsumer) {
-    consumer.apply(ExistingProductMiddleware).forRoutes(ProductsController, {
-      path: 'products/:productId',
-      method: RequestMethod.GET,
-    });
-    consumer.apply(ExistingCartMiddleware).forRoutes(ProductsController, {
+    consumer.apply(ExistingProductMiddleware).forRoutes(
+      {
+        path: 'products/:productId',
+        method: RequestMethod.GET,
+      },
+      {
+        path: 'products/add/cart/:productId',
+        method: RequestMethod.POST,
+      },
+    );
+    consumer.apply(ExistingCartMiddleware).forRoutes({
       path: 'products/add/cart/:productId',
-      method: RequestMethod.GET,
+      method: RequestMethod.POST,
     });
-    consumer
-      .apply(CheckingProductOnCartMiddleware)
-      .forRoutes(ProductsController, {
-        path: 'remove/:productId/:cartId',
-        method: RequestMethod.PATCH,
-      });
+    consumer.apply(CheckingProductOnCartMiddleware).forRoutes({
+      path: 'products/remove/:productId/:cartId',
+      method: RequestMethod.PATCH,
+    });
   }
 }

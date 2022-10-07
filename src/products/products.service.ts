@@ -14,7 +14,9 @@ export class ProductsService {
     return await this.prisma.$transaction(async () => {
       const count = await this.prisma.product.count();
 
-      const products = await this.prisma.product.findMany();
+      const products = await this.prisma.product.findMany({
+        include: { pictures: true },
+      });
       return { count: count, products: products };
     });
   }

@@ -32,7 +32,7 @@ export class CheckingProductOnCartMiddleware implements NestMiddleware {
         if (productOnCart) {
           req.existingProductOncart = productOnCart;
         } else {
-          throw new NotFoundException('no product found');
+          throw new NotFoundException('no product on cart found');
         }
       }
       next();
