@@ -19,12 +19,14 @@ export class CheckingProductOnCartMiddleware implements NestMiddleware {
   async use(req: Request, res: Response, next: NextFunction) {
     let productId;
     try {
+      console.log('middleware', req.existingProduct, req.existingCart);
       let productOnCart;
       if (req.existingProduct && req.existingCart) {
         let quantityIncartDATA = {
           productId: req.existingProduct.id,
           cartId: req.existingCart.id,
         };
+
         productOnCart = await this.productsService.isProductOnCart(
           quantityIncartDATA,
         );
@@ -32,6 +34,7 @@ export class CheckingProductOnCartMiddleware implements NestMiddleware {
         if (productOnCart) {
           req.existingProductOncart = productOnCart;
         } else {
+          console.log('error');
           throw new NotFoundException('no product on cart found');
         }
       }

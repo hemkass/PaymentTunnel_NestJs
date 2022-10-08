@@ -16,6 +16,8 @@ export class CartsService {
               select: {
                 id: true,
                 price: true,
+                title: true,
+                pictures: { include: { productPictures: true } },
               },
             },
           },

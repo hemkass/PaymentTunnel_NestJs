@@ -41,6 +41,8 @@ export class ExistingCartMiddleware implements NestMiddleware {
                   select: {
                     id: true,
                     price: true,
+                    title: true,
+                    pictures: { select: { src: true } },
                   },
                 },
               },

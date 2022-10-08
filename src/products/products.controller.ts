@@ -111,6 +111,7 @@ export class ProductsController {
     @Res() response: Response,
     @Body('quantity') quantity?: number,
   ): Promise<any> {
+    console.log('productOnCart', productOncart);
     if (productOncart) {
       let removeProductData: removeProductDTO = {
         product: product,

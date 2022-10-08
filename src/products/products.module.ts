@@ -16,6 +16,10 @@ export class ProductsModule {
   configure(consumer: MiddlewareConsumer) {
     consumer.apply(ExistingProductMiddleware).forRoutes(
       {
+        path: 'products/remove/:productId/:cartId',
+        method: RequestMethod.PATCH,
+      },
+      {
         path: 'products/:productId',
         method: RequestMethod.GET,
       },
@@ -24,10 +28,16 @@ export class ProductsModule {
         method: RequestMethod.POST,
       },
     );
-    consumer.apply(ExistingCartMiddleware).forRoutes({
-      path: 'products/add/cart/:productId',
-      method: RequestMethod.POST,
-    });
+    consumer.apply(ExistingCartMiddleware).forRoutes(
+      {
+        path: 'products/remove/:productId/:cartId',
+        method: RequestMethod.PATCH,
+      },
+      {
+        path: 'products/add/cart/:productId',
+        method: RequestMethod.POST,
+      },
+    );
     consumer.apply(CheckingProductOnCartMiddleware).forRoutes({
       path: 'products/remove/:productId/:cartId',
       method: RequestMethod.PATCH,

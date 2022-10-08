@@ -67,7 +67,20 @@ export class ProductsService {
 
     if (isProductAlreadyOnCart) {
       return this.prisma.cart.update({
-        include: { products: { include: { product: true } } },
+        include: {
+          products: {
+            include: {
+              product: {
+                select: {
+                  id: true,
+                  price: true,
+                  title: true,
+                  pictures: { select: { src: true } },
+                },
+              },
+            },
+          },
+        },
         where: { id: cart.id },
         data: {
           products: {
@@ -85,7 +98,20 @@ export class ProductsService {
     else {
       return await this.prisma.cart.update({
         where: { id: cart.id },
-        include: { products: { include: { product: true } } },
+        include: {
+          products: {
+            include: {
+              product: {
+                select: {
+                  id: true,
+                  price: true,
+                  title: true,
+                  pictures: { select: { src: true } },
+                },
+              },
+            },
+          },
+        },
         data: {
           products: {
             create: [
@@ -113,7 +139,20 @@ export class ProductsService {
     if (quantityRemoved >= quantityInCart) {
       let cartWithoutDeletedProduct = await this.prisma.cart.update({
         where: { id: cart.id },
-        include: { products: { include: { product: true } } },
+        include: {
+          products: {
+            include: {
+              product: {
+                select: {
+                  id: true,
+                  price: true,
+                  title: true,
+                  pictures: { select: { src: true } },
+                },
+              },
+            },
+          },
+        },
         data: {
           update_at: new Date(),
           products: {
@@ -135,7 +174,20 @@ export class ProductsService {
       // Case 2 : i only want to remove a part of the quantity's product from my cart but not all
       let newCart = await this.prisma.cart.update({
         where: { id: cart.id },
-        include: { products: { include: { product: true } } },
+        include: {
+          products: {
+            include: {
+              product: {
+                select: {
+                  id: true,
+                  price: true,
+                  title: true,
+                  pictures: { select: { src: true } },
+                },
+              },
+            },
+          },
+        },
         data: {
           update_at: new Date(),
           products: {

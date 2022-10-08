@@ -7,6 +7,7 @@ import { CartsModule } from './carts/carts.module';
 import { PaymentsModule } from './payments/payments.module';
 import { PrismaService } from './prisma/prisma.service';
 import { ConfigModule } from '@nestjs/config';
+import { UsersModule } from './users/users.module';
 
 @Module({
   imports: [
@@ -18,6 +19,7 @@ import { ConfigModule } from '@nestjs/config';
       isGlobal: true,
       envFilePath: `.env.${process.env.NODE_ENV}`,
     }),
+    UsersModule,
   ],
   controllers: [AppController],
   providers: [AppService, PrismaService],
