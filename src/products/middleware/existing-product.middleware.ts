@@ -31,6 +31,7 @@ export class ExistingProductMiddleware implements NestMiddleware {
         if (product) {
           req.existingProduct = product;
         } else {
+          console.log('rjet middleware');
           throw new NotFoundException('no product found');
         }
       }

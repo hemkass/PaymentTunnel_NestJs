@@ -1,38 +1,143 @@
 <p align="center">
   <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
+
+<h1>E-Commerce Backend
+MIT License</h1>
+
+#### Table of contents
+
+1. [Description](#description)
+2. [Built With](#built)
+3. [Installation Instructions and Requirement](#require)
+
+   - [Node.js Installation](#node)
+   - [SQL database](#sql)
+   - [Clone the Code and install dependencies](#clone)
+
+4. [Before starting](#start)
+
+   - [Compodocs](#compodocs)
+   - [Swagger](#swagger)
+   - [How does this API work ? ](#channel)
+
+     - [Add product(s)](#ddProduct)
+     - [Remove product(s)](#remove)
+     - [User(s)](#signup)
+     - [Payment](#payment)
+
+5. [Stay In touch](#contact)
+
+<a name="description"></a>
+
+# Description
+
+<p>
+This project creates the back-end code for an e-commerce site via NestJs Framework. This application uses Express.js API and Prisma  to interact with a PostgreSQL database. The API Routes are created using RESTful CRUD methods.
+
+Front-end here :https://github.com/hemkass/payment_tunnel_Front
+
+This Application is documented by SWAGGER and COMPODOCS
+
 </p>
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+<a name="built"></a>
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
+# Built With
+
+<ul>
+<li>NestJs</li>
+<li>JavaScript</li>
+<li>Typescript</li>
+<li>PostgreSQL</li>
+<li>Postico</li>
+<li>Prisma</li>
+<li>Swagger</li>
+<li>CompoDocs</li>
+
+</ul>
+
+<a name="require"></a>
+
+# Installation Instructions and Requirement
+
+<ol>
+<li>
+
+## Node.js Installation
+
+<a name="node"></a>
+
+<p>Please check that you have Node.js globally installed on your computer. 
+ If not, try reinstalling Node.js by following this link: https://nodejs.org/en/
+</p></li>
+<br />
+
+<li>
+
+## SQL database
+
+<a name="sql"></a>
+
+<p>
+
+To run, this project require to install PostgreSQL. If you don't have installed it yet, please check on their website : <code>https://www.postgresql.org/</code>
+
+Don't forget to add your DataBase in your .env
+
+</p></li>
+<br />
+
+<li>
+
+## Clone the Code and install dependencies
+
+<a name="clone"></a>
+
+<p> The first thing to do is to open git bash command line, and then simply you can clone the project under any of your favorite places as the following:
+
+> gh repo clone hemkass/PaymentTunnel_NestJs </p></li>
+
 </p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
 
-## Description
+</ol>
+<br />
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+# Before Starting
 
-## Installation
+<a name="start"></a>
+
+<p>Please to understand infrastructure, routes possibler, watch before :</p>
+
+<ol><li>
+
+## COMPODOCS
+
+<a name="compodocs"></a>
+
+<p>
+<underline>To run it :</underline>
 
 ```bash
-$ npm install
+$ npx @compodoc/compodoc -p tsconfig.json -s
 ```
 
-## Running the app
+Open your browser and navigate to http://localhost:8080
+
+if you have any trouble, please check nestJs documentation :
+https://docs.nestjs.com/recipes/documentation</p>
+
+</li>
+
+ <li>
+
+## SWAGGER
+
+<a name="swagger"></a>
+
+Open your browser and navigate to http://localhost:3000/api
+
+</p></li></ol>
+# Running the app
 
 ```bash
 # development
@@ -41,33 +146,57 @@ $ npm run start
 # watch mode
 $ npm run start:dev
 
+
 # production mode
 $ npm run start:prod
 ```
 
-## Test
+## How does this API work - API CHANNEL ?
+
+<a name="channel"></a>
+
+<li>STEP 1 : Add product from your cart</li>
+<a name="addProduct"></a>
+
+POST
 
 ```bash
-# unit tests
-$ npm run test
-
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
+http://localhost:3000/products/add/cart/:productId/:cartId
 ```
 
-## Support
+cartId is optional, if you don't send one, a new cart will be created.
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+PATCH
 
-## Stay in touch
+<li>STEP 2 bis : Remove product from your cart also </li>
 
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+<a name="remove"></a>
 
-## License
+```bash
+http://localhost:3000/products/remove/:productId/:cartId
+```
 
-Nest is [MIT licensed](LICENSE).
+<li>STEP 3: USERS </li>
+<a name="signup"></a>
+
+POST
+
+```bash
+http://localhost:3000/users/signup
+```
+
+<li>STEP 4: Add paiement</li>
+
+<a name="payment"></a>
+
+```bash
+http://localhost:3000/payments/create
+```
+
+# Stay in touch
+
+<a name="contact"></a>
+
+> > > > > > > c81012daa98c38113692f10fc2646dddc74aa563
+
+- Author - [Marine Corbel](https://fr.linkedin.com/in/marinecorbel)

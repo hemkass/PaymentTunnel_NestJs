@@ -85,6 +85,7 @@ export class ProductsController {
       if (quantity) {
         addProductData.quantityWanted = quantity;
       }
+      console.log('product controller', this.productService.addProductToCart);
       return this.productService.addProductToCart(addProductData);
     }
   }

@@ -25,6 +25,7 @@ export class ProductsService {
     const product = await this.prisma.product.findUnique({
       where: { id: id },
     });
+    console.log('product service', product);
     return product;
   }
 
