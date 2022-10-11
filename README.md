@@ -182,7 +182,7 @@ http://localhost:3000/products/remove/:productId/:cartId
 POST
 
 ```bash
-http://localhost:3000/users/signup
+http://localhost:3000/users/addOwner
 ```
 
 <li>STEP 4: Add paiement</li>
