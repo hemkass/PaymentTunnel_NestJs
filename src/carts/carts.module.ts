@@ -12,7 +12,10 @@ export class CartsModule {
   configure(consumer: MiddlewareConsumer) {
     consumer
       .apply(ExistingCartMiddleware)
-      .exclude({ path: 'carts', method: RequestMethod.POST })
+      .exclude(
+        { path: 'carts', method: RequestMethod.POST },
+        { path: 'carts', method: RequestMethod.GET },
+      )
       .forRoutes(CartsController);
   }
 }

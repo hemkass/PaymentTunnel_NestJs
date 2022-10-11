@@ -197,6 +197,4 @@ http://localhost:3000/payments/create
 
 <a name="contact"></a>
 
-> > > > > > > c81012daa98c38113692f10fc2646dddc74aa563
-
 - Author - [Marine Corbel](https://fr.linkedin.com/in/marinecorbel)

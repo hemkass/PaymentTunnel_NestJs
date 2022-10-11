@@ -18,6 +18,7 @@ export class ExistingCartMiddleware implements NestMiddleware {
   constructor(private prisma: PrismaService) {}
 
   async use(req: Request, res: Response, next: NextFunction) {
+    console.log('middleware');
     try {
       let cartId;
       if (req.params.cartId) {

@@ -8,6 +8,10 @@ import { PaymentsModule } from './payments/payments.module';
 import { PrismaService } from './prisma/prisma.service';
 import { ConfigModule } from '@nestjs/config';
 import { UsersModule } from './users/users.module';
+import { StripeModule } from './stripe/stripe.module';
+import { StripeService } from './stripe/stripe.service';
+import { PaymentsService } from './payments/payments.service';
+import { CartsService } from './carts/carts.service';
 
 @Module({
   imports: [
@@ -15,13 +19,20 @@ import { UsersModule } from './users/users.module';
     ProductsModule,
     CartsModule,
     PaymentsModule,
+    StripeModule,
     ConfigModule.forRoot({
       isGlobal: true,
-      envFilePath: `.env.${process.env.NODE_ENV}`,
+      envFilePath: `.env`,
     }),
     UsersModule,
   ],
   controllers: [AppController],
-  providers: [AppService, PrismaService],
+  providers: [
+    AppService,
+    PrismaService,
+    StripeService,
+    PaymentsService,
+    CartsService,
+  ],
 })
 export class AppModule {}

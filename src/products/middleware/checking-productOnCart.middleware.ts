@@ -18,6 +18,7 @@ export class CheckingProductOnCartMiddleware implements NestMiddleware {
 
   async use(req: Request, res: Response, next: NextFunction) {
     let productId;
+    console.log('middleware product on cart');
     try {
       console.log('middleware', req.existingProduct, req.existingCart);
       let productOnCart;

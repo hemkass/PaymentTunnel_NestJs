@@ -17,6 +17,7 @@ export class ExistingProductMiddleware implements NestMiddleware {
 
   async use(req: Request, res: Response, next: NextFunction) {
     let productId;
+    console.log('middleware product');
     try {
       if (req.params.productId) {
         productId = req.params.productId;

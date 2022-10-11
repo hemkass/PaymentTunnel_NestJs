@@ -1,7 +1,14 @@
-import { Controller, Get, Param, Post, Req, Session } from '@nestjs/common';
+import {
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Post,
+  Req,
+  Session,
+} from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
-import { PrismaService } from 'src/prisma/prisma.service';
-import { ExistingProduct } from 'src/products/decorator/current-product.decorator';
+
 import { CartsService } from './carts.service';
 import { ExistingCart } from './decorators/existing-cart';
 
@@ -20,5 +27,22 @@ export class CartsController {
   @Get('/:cartId')
   getCart(@Param('cartId') cartId: string, @ExistingCart() cart) {
     return cart;
+  }
+
+  @Delete('/delete/:cartId')
+  deleteCart(@Param('cartId') cartId: string, @ExistingCart() cart) {
+    return this.cartService.deleteCartById(cartId);
+  }
+
+  @Get('/get/abandonnedCart')
+  AbandonnedCart() {
+    console.log('hello');
+    return this.cartService.getAbandonnedCarts();
+  }
+
+  @Get('/set/abandonnedCart')
+  SetAbandonnedCart() {
+    console.log('hello');
+    return this.cartService.setAbandonnedCarts();
   }
 }

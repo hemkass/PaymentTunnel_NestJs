@@ -1,6 +1,7 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { StatusCart } from '@prisma/client';
-import { PrismaService } from 'src/prisma/prisma.service';
+import { lastHour, lastWeek } from 'utils/utils';
+import { PrismaService } from '../prisma/prisma.service';
 
 @Injectable()
 export class CartsService {
@@ -73,5 +74,57 @@ export class CartsService {
     } catch (error) {
       console.log('error update Total cart ', error);
     }
+  }
+
+  async getAbandonnedCarts() {
+    let lastWeekDate = lastWeek();
+    let lastHourDate = lastHour();
+    let abandonnedCart = await this.prisma.$transaction(async () => {
+      const count = await this.prisma.cart.count({
+        where: {
+          created_at: { lte: lastHourDate },
+          status: StatusCart.PENDING,
+        },
+      });
+
+      const carts = await this.prisma.cart.findMany({
+        where: {
+          created_at: { lte: lastHourDate },
+          status: StatusCart.PENDING,
+        },
+      });
+      return { count: count, abandonnedCarts: carts };
+    });
+
+    console.log('abandonnedCart', abandonnedCart);
+    return abandonnedCart;
+  }
+
+  async setAbandonnedCarts() {
+    let lastWeekDate = lastWeek();
+    let lastHourDate = lastHour();
+
+    let abandonnedCart = await this.prisma.$transaction(async () => {
+      const carts = await this.prisma.cart.findMany({
+        where: {
+          created_at: { lte: lastHourDate },
+          status: StatusCart.PENDING,
+        },
+      });
+      let idsToUpdate = [];
+      carts.map((cart) => {
+        return idsToUpdate.push(cart.id);
+      });
+      await this.prisma.cart.updateMany({
+        where: {
+          id: { in: idsToUpdate },
+        },
+        data: { status: StatusCart.ABANDONED },
+      });
+    });
+  }
+
+  async deleteCartById(cartId) {
+    return await this.prisma.cart.delete({ where: { id: cartId } });
   }
 }

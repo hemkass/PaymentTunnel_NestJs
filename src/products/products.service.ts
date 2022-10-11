@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { CartsService } from 'src/carts/carts.service';
+import { CartsService } from '../carts/carts.service';
 import { PrismaService } from '../prisma/prisma.service';
 import { ProductsController } from './products.controller';
 
@@ -25,7 +25,7 @@ export class ProductsService {
     const product = await this.prisma.product.findUnique({
       where: { id: id },
     });
-    console.log('product service', product);
+
     return product;
   }
 

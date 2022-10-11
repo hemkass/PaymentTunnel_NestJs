@@ -31,3 +31,24 @@ export function getRandomIntInclusive(min, max) {
   max = Math.floor(max);
   return Math.floor(Math.random() * (max - min)) + min;
 }
+
+export function lastWeek() {
+  var today = new Date();
+  var lastweek = new Date(
+    today.getFullYear(),
+    today.getMonth(),
+    today.getDate() - 7,
+  );
+  return lastweek;
+}
+
+export function lastHour() {
+  var today = new Date();
+  var lastHour = new Date(
+    today.getFullYear(),
+    today.getMonth(),
+    today.getDate(),
+    today.getHours() - 1,
+  );
+  return lastHour;
+}

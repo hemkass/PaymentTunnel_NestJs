@@ -118,7 +118,7 @@ model Payment {
   update_at         DateTime?
   owner             User      @relation(fields: [ownerId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   ownerId           String    @unique
-  affiliateCart     Cart      @relation(fields: [cartId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  affiliateCart     Cart      @relation(fields: [cartId], references: [id])
   cartId            String    @unique
 
 }
